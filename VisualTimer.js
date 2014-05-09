@@ -17,8 +17,8 @@ function VisualTimer(opts) {
 	}
 	opts.game.add.sprite(opts.x, opts.y, key, 1);
 	this.sprite = opts.game.add.sprite(opts.x, opts.y, key, 0);
-	this.reset();
 	this.fullWidth = this.sprite.width;
+	this.reset();
 }
 
 VisualTimer.prototype = {
