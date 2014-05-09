@@ -29,7 +29,7 @@ VisualTimer.prototype = {
 		if (this.type == 'down') {
 			this.sprite.crop(null);
 		} else {
-			this.sprite.crop(new Phaser.Rectangle(0, 0, 0, this.sprite.height);
+			this.sprite.crop(new Phaser.Rectangle(0, 0, 0, this.sprite.height));
 		}
 	},
 
