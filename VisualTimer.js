@@ -5,7 +5,7 @@ function VisualTimer(opts) {
 	if (opts.type) {
 		this.type = opts.type;
 	}
-	this.totalTime = opts.seconds || 30;
+	this.totalTime = opts.seconds;
 	this.onFinish = opts.onFinish;
 	var key = 'timer';
 	if (opts.key) {
@@ -65,7 +65,7 @@ VisualTimer.prototype = {
 	},
 
 	remainingTime: function() {
-		return this.gameTime;
+		return (this.type == 'down') ? this.gameTime : this.totalTime - this.gameTime;
 	}
 };
 
