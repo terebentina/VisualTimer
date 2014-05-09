@@ -1,6 +1,6 @@
 # Visual Indicator
 
-Easily add a countdown (or count up) timer for your [Phaser](http://phaser.io) games.
+Easily add a countdown (or count up) timer for your [Phaser](http://phaser.io) games. Support for browserify included :)
 
 ![](demo.gif)
 
@@ -13,11 +13,14 @@ bower install git://github.com/terebentina/VisualTimer.git --save
 
 Usage:
 ```javascript
+// if you use browserify use the following, otherwise load it with your preferred method
+var VisualTimer = require('path/to/VisualTimer');
+
 // in preload
 game.load.spritesheet('timer', 'assets/img/timer.png', 150, 20);
 
 // in create
-var indicator = new VisualIndicator({
+var indicator = new VisualTimer({
 					game: this.game,
 					x: 123,
 					y: 456,
