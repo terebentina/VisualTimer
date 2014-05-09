@@ -26,7 +26,11 @@ VisualTimer.prototype = {
 		// the remaining time of the current counter
 		this.gameTime = (this.type == 'down') ? this.totalTime : 0;
 		clearInterval(this.gameTick);
-		this.sprite.crop(null);
+		if (this.type == 'down') {
+			this.sprite.crop(null);
+		} else {
+			this.sprite.crop(new Phaser.Rectangle(0, 0, 0, this.sprite.height);
+		}
 	},
 
 	start: function() {
