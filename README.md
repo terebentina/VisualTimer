@@ -58,6 +58,14 @@ You can use the following options when initialising the indicator:
 | resume| resumes the timer after a pause (same with start)|
 | remainingTime| returns the remaining time|
 
+
+## Flags
+
+| Method | Description |
+|--------|-------------|
+| hasFinished | boolean value showing if the indicator has finished counting or not |
+
+
 ## Graphics
 The default indicator provided is a blue gradient on grey, with some stripes.
 ![](assets/img/timer.png)

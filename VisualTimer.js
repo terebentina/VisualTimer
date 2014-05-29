@@ -18,6 +18,7 @@
 		}
 		this.totalTime = opts.seconds;
 		this.onFinish = opts.onFinish;
+		this.hasFinished = false;
 		var key = 'timer';
 		if (opts.key) {
 			key = opts.key;
@@ -36,6 +37,7 @@
 		reset: function() {
 			// the remaining time of the current counter
 			this.gameTime = (this.type == 'down') ? this.totalTime : 0;
+			this.hasFinished = false;
 			clearInterval(this.gameTick);
 			if (this.type == 'down') {
 				this.sprite.crop(null);
@@ -60,6 +62,7 @@
 				}
 				if ((self.gameTime <= 0 && self.type == 'down') || (self.gameTime >= self.totalTime && self.type == 'up')) {
 					clearInterval(self.gameTick);
+					self.hasFinished = true;
 					if (self.onFinish) {
 						self.onFinish.call(self.context);
 					}
