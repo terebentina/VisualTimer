@@ -25,12 +25,12 @@ var indicator = new VisualTimer({
 					x: 123,
 					y: 456,
 					seconds: 60,
-					onFinish: function() {...}
+					onComplete: function() {...}
 				});
 indicator.start();
 ```
 
-This will show a progress bar indicator at (123, 456) and will it'll start counting down as soon as you call start() on it. After the time is up the onFinish() callback will be triggered.
+This will show a progress bar indicator at (123, 456) and will it'll start counting down as soon as you call start() on it. After the time is up the onComplete() callback will be triggered.
 
 ## Options
 You can use the following options when initialising the indicator:
@@ -41,9 +41,9 @@ You can use the following options when initialising the indicator:
 | x| (required) the x coordinate for the indicator|
 | y| (required) the y coordinate for the indicator|
 | seconds| (required) the time to count|
-| onFinish| (required) a function to call when the time is up|
-| type| (optional, default 'down') this is either 'up' or 'down' to have the indicator start from 0 to `seconds` or from `seconds` to 0|
-| context| (optional) you might want to pass `this` for the context to have the `onFinish` callback run in that context. If not specified, it'll run in the context of the indicator|
+| onComplete| (required) a function to call when the time is up|
+| type| (optional, default 'down') this is either 'up' or 'down' to have the indicator start from 0 up to `seconds` or from `seconds` down to 0|
+| context| (optional) you might want to pass `this` for the context to have the `onComplete` callback run in that context. If not specified, it'll run in the context of the indicator|
 | key| (optional, default 'timer') the cache key from the preload step.|
 
 
@@ -51,17 +51,17 @@ You can use the following options when initialising the indicator:
 
 | Method | Description |
 |--------|-------------|
-| start| starts the timer. Note that if you pause() the timer then call start(), it'll resume from where it left|
-| stop| stops the timer and resets it (note that `onFinish` will not be called when you call `stop`)|
-| reset| same as stop|
+| start| resets the timer and starts from the beginning.|
+| stop| stops the timer (note that `onComplete` will not be called when you call `stop`)|
+| reset| resets the timer|
 | pause| pauses the timer|
-| resume| resumes the timer after a pause (same with start)|
+| resume| resumes the timer after a pause|
 | remainingTime| returns the remaining time|
 
 
 ## Flags
 
-| Method | Description |
+| Flag | Description |
 |--------|-------------|
 | hasFinished | boolean value showing if the indicator has finished counting or not |
 

@@ -17,75 +17,68 @@
 			this.type = opts.type;
 		}
 		this.totalTime = opts.seconds;
-		this.onFinish = opts.onFinish;
-		this.hasFinished = false;
+		this.game = opts.game;
+		this.onComplete = opts.onComplete;
 		var key = 'timer';
 		if (opts.key) {
 			key = opts.key;
 		}
-		this.context = this;
-		if (opts.context) {
-			this.context = opts.context;
-		}
-		opts.game.add.sprite(opts.x, opts.y, key, 1);
-		this.sprite = opts.game.add.sprite(opts.x, opts.y, key, 0);
+		this.game.add.sprite(opts.x, opts.y, key, 1);
+		this.sprite = this.game.add.sprite(opts.x, opts.y, key, 0);
 		this.fullWidth = this.sprite.width;
 		this.reset();
 	}
 
 	VisualTimer.prototype = {
 		reset: function() {
-			// the remaining time of the current counter
-			this.gameTime = (this.type == 'down') ? this.totalTime : 0;
+			var self = this;
 			this.hasFinished = false;
-			clearInterval(this.gameTick);
+			this.timer = this.game.time.create(true);
+			this.timer.repeat(Phaser.Timer.SECOND, this.totalTime, timerTick, this);
+			this.timer.onComplete.add(function() {
+				self.hasFinished = true;
+				if (self.onComplete) {
+					self.onComplete();
+				}
+			});
+			this.rect = new Phaser.Rectangle(0, 0, 0, this.sprite.height);
 			if (this.type == 'down') {
 				this.sprite.crop(null);
 			} else {
-				this.sprite.crop(new Phaser.Rectangle(0, 0, 0, this.sprite.height));
+				this.sprite.crop(this.rect);
 			}
 		},
 
 		start: function() {
-			var rect = new Phaser.Rectangle(0, 0, this.sprite.width, this.sprite.height)
-				,self = this
-				;
-			this.gameTick = setInterval(function() {
-				if (self.type == 'down') {
-					self.gameTime--;
-				} else {
-					self.gameTime++;
-				}
-				if ((self.gameTime >= 0 && self.type == 'down') || (self.gameTime <= self.totalTime && self.type == 'up')) {
-					rect.width = Math.floor((self.gameTime / self.totalTime) * self.fullWidth);
-					self.sprite.crop(rect);
-				}
-				if ((self.gameTime <= 0 && self.type == 'down') || (self.gameTime >= self.totalTime && self.type == 'up')) {
-					clearInterval(self.gameTick);
-					self.hasFinished = true;
-					if (self.onFinish) {
-						self.onFinish.call(self.context);
-					}
-				}
-			}, 1000);
+			this.reset();
+			this.timer.start();
 		},
 
 		stop: function() {
-			this.reset();
+			this.timer.stop();
 		},
 
 		pause: function() {
-			clearInterval(this.gameTick);
+			this.timer.pause();
 		},
 
 		resume: function() {
-			this.start();
+			this.timer.resume();
 		},
 
 		remainingTime: function() {
-			return (this.type == 'down') ? this.gameTime : this.totalTime - this.gameTime;
+			return this.totalTime - this.timer.seconds;
 		}
 	};
+
+
+	function timerTick() {
+		/*jshint validthis:true */
+		var myTime = (this.type == 'down') ? this.remainingTime() : this.timer.seconds;
+		this.rect.width = Math.max(0, (myTime / this.totalTime) * this.fullWidth);
+		this.sprite.crop(this.rect);
+	}
+
 
 	if (module) {
 		module.exports = VisualTimer;
