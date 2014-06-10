@@ -31,6 +31,9 @@
 
 	VisualTimer.prototype = {
 		reset: function() {
+			if (this.timer) {
+				this.timer.stop();
+			}
 			var self = this;
 			this.hasFinished = false;
 			this.timer = this.game.time.create(true);
