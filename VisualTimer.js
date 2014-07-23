@@ -55,7 +55,7 @@
 		setTime: function(seconds) {
 			this.totalTime = seconds;
 			this.reset();
-		}
+		},
 
 		start: function() {
 			this.reset();
